@@ -122,52 +122,52 @@ int main()
 		demo.read((char*)& Slot, sizeof(Slot));
 		if (Type == 0x01 || Type == 0x02)
 		{
-			cout << Tick << endl;
-			cout << "Demo Message - SignOn Or Packet" << endl;
+			cout << Tick;
+			cout << "- Demo Message - SignOn Or Packet" << endl;
 			SignOnRead(demo);
 		}
 		else if (Type == 0x03)
 		{
-			cout << Tick << endl;
-			cout << "Demo Message - SyncTick" << endl;
+			cout << Tick;
+			cout << "- Demo Message - SyncTick" << endl;
 			SyncTickRead(demo);
 		}
 		else if (Type == 0x04)
 		{
-			cout << Tick << endl;
+			cout << Tick;
 			//Start Level Command : ss_force_primary_fullscreen 0
 			//End level command : playvideo_end_level_transition
-			cout << "Demo Message - Console Command - ";
+			cout << "- Demo Message - Console Command - ";
 			ConsolecmdRead(demo);
 		}
 		else if (Type == 0x05)
 		{
-			cout << Tick << endl;
-			cout << "Demo Message - User Command" << endl;
+			cout << Tick;
+			cout << "- Demo Message - User Command" << endl;
 			UsercmdRead(demo);
 		}
 		else if (Type == 0x06)
 		{
-			cout << Tick << endl;
-			cout << "Demo Message - Data Table" << endl;
+			cout << Tick;
+			cout << "- Demo Message - Data Table" << endl;
 			DataTableRead(demo);
 		}
 		else if (Type == 0x07)
 		{
-			cout << Tick << endl;
-			cout << "Demo Message - Stop" << endl;
+			cout << Tick;
+			cout << "- Demo Message - Stop" << endl;
 			StopRead(demo);
 		}
 		else if (Type == 0x08)
 		{
-			cout << Tick << endl;
-			cout << "Demo Message - Custom Data" << endl;
+			cout << Tick;
+			cout << "- Demo Message - Custom Data" << endl;
 			CustomDataRead(demo);
 		}
 		else if (Type == 0x09)
 		{
-			cout << Tick << endl;
-			cout << "Demo Message - String Tables" << endl;
+			cout << Tick;
+			cout << "- Demo Message - String Tables" << endl;
 			StringTablesRead(demo);
 		}
 		else
