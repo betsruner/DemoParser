@@ -5,7 +5,7 @@
 #include <string>
 
 using namespace std;
-//idiot
+
 int ReadHeader(ifstream& file)
 {
 	char Hl2demo[8];
@@ -62,7 +62,7 @@ int UsercmdRead(ifstream& file)
 	int32_t Cmd, size, CommandNumber, TickCount, Buttons, WeaponSelect, WeaponSubtype;
 	short MouseDx, MouseDy;
 	float ViewAnglesX, ViewAnglesY, ViewAnglesZ, SideMove, ForwardMove, UpMove;
-	unsigned char Impulse;	
+	unsigned char Impulse;
 	file.read((char*)& Cmd, sizeof(Cmd));
 	file.read((char*)& size, sizeof(size));
 	file.ignore(size);
@@ -75,7 +75,7 @@ int DataTableRead(ifstream& file)
 	file.ignore(Size);
 	return 0;
 }
-int StopRead(ifstream& file) 
+int StopRead(ifstream& file)
 {
 	return 0;
 }
@@ -87,7 +87,7 @@ int CustomDataRead(ifstream& file)
 	file.ignore(Size);
 	return 0;
 }
-int StringTablesRead(ifstream& file) 
+int StringTablesRead(ifstream& file)
 {
 	int32_t Size;
 	file.read((char*)& Size, sizeof(Size));
@@ -97,7 +97,7 @@ int StringTablesRead(ifstream& file)
 
 int main()
 {
-	ifstream demo("LaserCrusher.dem", std::ios::in | ios::binary);
+	ifstream demo("Sample Demos/LaserCrusher.dem", std::ios::in | ios::binary);
 
 	if (demo.fail())
 	{
@@ -183,9 +183,9 @@ int main()
 	demo.ignore(152);
 	demo.read((char*)& InSeq, sizeof(InSeq));
 	demo.read((char*)& OutSeq, sizeof(OutSeq));
-	demo.read((char*)& size, sizeof(size));	
+	demo.read((char*)& size, sizeof(size));
 	demo.ignore(size);
-	
+
 
 	// Outputting useful information
 	cout << endl;
@@ -312,7 +312,7 @@ int main()
 	cout << size << endl;
 	cout <<"DATA: " << Data << endl;
 
-//Ninth Tick 
+//Ninth Tick
 	demo.read((char*)& Type, sizeof(Type));
 	demo.read((char*)& Tick, sizeof(Tick));
 	demo.read((char*)& Slot, sizeof(Slot));
@@ -421,7 +421,7 @@ int main()
 	cout << size << endl;
 	cout << "DATA: " << Data << endl;
 
-//15th Tick 
+//15th Tick
 	demo.read((char*)& Type, sizeof(Type));
 	demo.read((char*)& Tick, sizeof(Tick));
 	demo.read((char*)& Slot, sizeof(Slot));
@@ -439,7 +439,7 @@ int main()
 	cout << size << endl;
 	cout << "DATA: " << Data << endl;
 
-//16th Tick 
+//16th Tick
 	demo.read((char*)& Type, sizeof(Type));
 	demo.read((char*)& Tick, sizeof(Tick));
 	demo.read((char*)& Slot, sizeof(Slot));
@@ -672,7 +672,7 @@ int main()
 	demo.read((char*)& InSeq, sizeof(InSeq));
 	demo.read((char*)& OutSeq, sizeof(OutSeq));
 	demo.read((char*)& size, sizeof(size));
-	cout << size << endl; 
+	cout << size << endl;
 	demo.ignore(size);
 
 //29th Tick
@@ -726,6 +726,6 @@ int main()
 
 
 
-	
+
 	return 0;
 }
