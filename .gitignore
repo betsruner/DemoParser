@@ -5,4 +5,4 @@
 !.gitignore
 !*.cpp
 !*.h
-!*.dem
+!Sample Demos/*.dem
