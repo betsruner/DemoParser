@@ -53,23 +53,14 @@ int SyncTickRead(ifstream& file)
 {
 	return 0;
 }
-int ConsolecmdRead(ifstream& file)
+string ConsolecmdRead(ifstream& file)
 {
 	int32_t size;
 	char Data[260];
-	file.read((char*)&size, sizeof(size));
+	file.read((char*)& size, sizeof(size));
 	file.read((char*)& Data, size);
-	cout << Data << endl;
 	string StringData(Data);
-	if (StringData == "ss_force_primary_fullscreen 0")
-	{
-		return 1;
-	}
-	else if (StringData == "playvideo_end_level_transition coop_bluebot_load 2.000000")
-	{
-		return 2;
-	}
-	return 0;
+	return StringData;
 }
 int UsercmdRead(ifstream& file)
 {
@@ -120,8 +111,8 @@ int main()
 	}
 
 	// Reading Demo Header
-	int result, StartTick, EndTick,position,AdjustedTicks;
-	string Data, ClientName,MapName, Information;
+	int StartTick, EndTick,position,AdjustedTicks;
+	string Data, ClientName,MapName, Information,StringData;
 	Information = ReadHeader(demo);
 	position = Information.find(" ");
 	ClientName = Information.substr(0,position);
@@ -138,58 +129,72 @@ int main()
 		demo.read((char*)& Slot, sizeof(Slot));
 		if (Type == 0x01 || Type == 0x02)
 		{
-			cout << Tick;
-			cout << "- Demo Message - SignOn Or Packet" << endl;
+			//cout << Tick;
+			//cout << " - Demo Message - SignOn Or Packet" << endl;
 			SignOnRead(demo);
 		}
 		else if (Type == 0x03)
 		{
-			cout << Tick;
-			cout << "- Demo Message - SyncTick" << endl;
+			//cout << Tick;
+			//cout << " - Demo Message - SyncTick" << endl;
 			SyncTickRead(demo);
 		}
 		else if (Type == 0x04)
 		{
-			cout << Tick;
-			cout << "- Demo Message - Console Command - ";
-			result = ConsolecmdRead(demo);
-			if (result == 1)
+			StringData = ConsolecmdRead(demo);
+			if (StringData == "ss_force_primary_fullscreen 0")
 			{
 				StartTick = Tick;
+				cout << Tick;
+				cout << " - Demo Message - Console Command - ";
+				cout << StringData << endl;
 			}
-			else if (result == 2)
+			else if (StringData == "playvideo_end_level_transition coop_bluebot_load 2.000000")
 			{
 				EndTick = Tick;
+				cout << Tick;
+				cout << " - Demo Message - Console Command - ";
+				cout << StringData << endl;
+			}
+			else if (StringData == "cmd1 voice_modenable 1" || StringData == "voice_modenable 1")
+			{
+
+			}
+			else
+			{
+				cout << Tick;
+				cout << " - Demo Message - Console Command - ";
+				cout << StringData << endl;
 			}
 		}
 		else if (Type == 0x05)
 		{
-			cout << Tick;
-			cout << "- Demo Message - User Command" << endl;
+			//cout << Tick;
+			//cout << " - Demo Message - User Command" << endl;
 			UsercmdRead(demo);
 		}
 		else if (Type == 0x06)
 		{
-			cout << Tick;
-			cout << "- Demo Message - Data Table" << endl;
+			//cout << Tick;
+			//cout << " - Demo Message - Data Table" << endl;
 			DataTableRead(demo);
 		}
 		else if (Type == 0x07)
 		{
-			cout << Tick;
-			cout << "- Demo Message - Stop" << endl;
+			//cout << Tick;
+			//cout << " - Demo Message - Stop" << endl;
 			StopRead(demo);
 		}
 		else if (Type == 0x08)
 		{
-			cout << Tick;
-			cout << "- Demo Message - Custom Data" << endl;
+			//cout << Tick;
+			//cout << " - Demo Message - Custom Data" << endl;
 			CustomDataRead(demo);
 		}
 		else if (Type == 0x09)
 		{
-			cout << Tick;
-			cout << "- Demo Message - String Tables" << endl;
+			//cout << Tick;
+			//cout << " - Demo Message - String Tables" << endl;
 			StringTablesRead(demo);
 		}
 		else
