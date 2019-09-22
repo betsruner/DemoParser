@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int ReadHeader(ifstream& file)
+string ReadHeader(ifstream& file)
 {
 	char Hl2demo[8];
 	int32_t demoprotocol, networkprotocol, ticks, frames, signonlength, Unknown;
@@ -23,7 +23,11 @@ int ReadHeader(ifstream& file)
 	file.read((char*)& ticks, sizeof(ticks));
 	file.read((char*)& frames, sizeof(frames));
 	file.read((char*)& signonlength, sizeof(signonlength));
-	return 0;
+	string StringClientName(clientname);
+	string StringMapName(mapname);
+	string Information;
+	Information = StringClientName + " " + StringMapName;
+	return Information;
 }
 int SignOnRead(ifstream& file)
 {
@@ -56,6 +60,15 @@ int ConsolecmdRead(ifstream& file)
 	file.read((char*)&size, sizeof(size));
 	file.read((char*)& Data, size);
 	cout << Data << endl;
+	string StringData(Data);
+	if (StringData == "ss_force_primary_fullscreen 0")
+	{
+		return 1;
+	}
+	else if (StringData == "playvideo_end_level_transition coop_bluebot_load 2.000000")
+	{
+		return 2;
+	}
 	return 0;
 }
 int UsercmdRead(ifstream& file)
@@ -107,9 +120,12 @@ int main()
 	}
 
 	// Reading Demo Header
-	int32_t PlaceHolder;
-	string Data;
-	PlaceHolder = ReadHeader(demo);
+	int result, StartTick, EndTick,position,AdjustedTicks;
+	string Data, ClientName,MapName, Information;
+	Information = ReadHeader(demo);
+	position = Information.find(" ");
+	ClientName = Information.substr(0,position);
+	MapName = Information.substr(position+1);
 
 	// Reading Demo Messages
 	unsigned char Type;
@@ -135,10 +151,16 @@ int main()
 		else if (Type == 0x04)
 		{
 			cout << Tick;
-			//Start Level Command : ss_force_primary_fullscreen 0
-			//End level command : playvideo_end_level_transition
 			cout << "- Demo Message - Console Command - ";
-			ConsolecmdRead(demo);
+			result = ConsolecmdRead(demo);
+			if (result == 1)
+			{
+				StartTick = Tick;
+			}
+			else if (result == 2)
+			{
+				EndTick = Tick;
+			}
 		}
 		else if (Type == 0x05)
 		{
@@ -175,6 +197,12 @@ int main()
 			cout << "How will Pizza get a job now" << endl;
 		}
 	}
-
+	AdjustedTicks = EndTick - StartTick;
+	//Useful Information
+	cout << ClientName << endl;
+	cout << MapName << endl;
+	cout << StartTick << endl;
+	cout << EndTick << endl;
+	cout << AdjustedTicks << endl;
 	return 0;
 }
